@@ -1,21 +1,31 @@
 import mongoose from "mongoose";
 
-const blogSchema = new mongoose.Schema({
+const blogSchema = new mongoose.Schema(
+  {
     title: {
-        type: String,
-        require: true
+      type: String,
+      required: [true, "Title is required"],
+      minlength: [3, "Title must be at least 3 characters"],
+      maxlength: [100, "Title cannot exceed 100 characters"],
     },
     description: {
-        type: String,
-        require: true
+      type: String,
+      required: [true, "description is required"],
+      minlength: [10, "Description must be at least 10 characters"],
     },
-    category:{
-        type: String,
-        require: true
-    }
+    category: {
+      type: String,
+      required: [true, "category is required"],
+    },
+      user: {
+      type: Schema.Types.ObjectId,
+      ref: "users",
+      required: true,
+    },
+  },
+  { timestamps: true },
+);
 
-}, {timestamps: true})
+const Blog = mongoose.model("blogs", blogSchema);
 
-const Blog = mongoose.model('blogs',blogSchema)
-
-export default Blog
+export default Blog;
