@@ -21,3 +21,17 @@ try{
     
 }
 }
+
+export const getBlog  = async (req,res)=>{
+    try{
+        const listBlog = await Blog.find()
+        res.status(200).json({
+            status: true,
+            message: "success",
+            data: listBlog
+        })
+    }catch(err){
+        console.log(err);
+        
+    }
+}
