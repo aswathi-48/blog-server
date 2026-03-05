@@ -66,3 +66,25 @@ export const login = async (req, res, next) => {
     console.log("err");
   }
 };
+
+export const profileView = async (req,res, next)=>{
+    try{
+        const {id} =req.body
+        if(!id){
+            console.log("id is required");      
+        }
+        const userData = await User.findById(id)
+        if(!userData) {
+            console.log("user not found");        
+        }else{
+            res.status(200).json({
+                status: true,
+                message:"user fetched successfully",
+                data: userData
+            })
+        }    
+    }catch(err){
+        console.log("err");
+        
+    }
+}
