@@ -3,9 +3,9 @@ const app = express()
 import dotenv from 'dotenv'
 import connection from './config/db.js'
 dotenv.config()
-
+app.use(express.json())
 connection()
-const port = 3000
+const port = process.env.PORT
 
 app.listen(port,()=>{
 console.log(`server running on port ${port}`);
