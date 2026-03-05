@@ -1,0 +1,23 @@
+import Blog from "../models/blog.js";
+
+export const addBlog = async(req, res)=>{
+try{
+    const {title, category, description} = req.body
+    if(!title){
+        console.log("title is required");
+    }else{
+        const newBlog = new Blog({
+            title, category, description
+        })
+        const saveBlog = await newBlog.save()
+        res.status(200).json({
+            status: true,
+            message: "success",
+            data: saveBlog
+        })
+    }
+}catch(err){
+    console.log(err);
+    
+}
+}
