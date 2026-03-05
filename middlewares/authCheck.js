@@ -1,6 +1,5 @@
-const jwt = require('jsonwebtoken');
-const User = require('../models/userSchema');
-
+import User from "../models/user.js";
+import jwt from 'jsonwebtoken'
 //authorization
  const authCheck = async (req, res, next) => {
     if ( req.method === "OPTIONS" ) {
@@ -30,4 +29,5 @@ const User = require('../models/userSchema');
     }
 
 }
-module.exports = authCheck;
+
+export default authCheck
