@@ -7,7 +7,7 @@ try{
         console.log("title is required");
     }else{
         const newBlog = new Blog({
-            title, category, description
+            title, category, description, user: req.userDetails.userId,
         })
         const saveBlog = await newBlog.save()
         res.status(200).json({
@@ -21,21 +21,6 @@ try{
     
 }
 }
-
-// export const getBlog  = async (req,res)=>{
-//     try{
-//         const listBlog = await Blog.find()
-//         res.status(200).json({
-//             status: true,
-//             message: "success",
-//             data: listBlog
-//         })
-//     }catch(err){
-//         console.log(err);
-        
-//     }
-// }
-
 
 // getBlog
 export const getBlog = async (req, res) => {
@@ -53,7 +38,7 @@ export const getBlog = async (req, res) => {
     }
 
     const listBlog = await Blog.find(filter)
-    //   .populate("user", "name email")
+      .populate("user", "name email")
       .sort({ createdAt: -1 });
 
     res.status(200).json({
