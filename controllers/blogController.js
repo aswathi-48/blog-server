@@ -90,3 +90,54 @@ export const getSingleBlog = async (req, res) => {
     console.log(err);
   }
 };
+
+export const updateBlog = async (req, res) => {
+  try {
+    const { id, title, description, category } = req.body;
+
+    if (!id) {
+      return res.status(400).json({
+        status: false,
+        message: "Blog ID is required",
+      });
+    }
+
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      return res.status(404).json({
+        status: false,
+        message: "Blog not found",
+      });
+    }
+
+    const updateData = {};
+
+    if (title) updateData.title = title;
+    if (description) updateData.description = description;
+    if (category) updateData.category = category;
+
+    if (Object.keys(updateData).length === 0) {
+      return res.status(400).json({
+        status: false,
+        message: "At least one field is required to update",
+      });
+    }
+
+    const updatedBlog = await Blog.findByIdAndUpdate(id, updateData, {
+      new: true,
+      runValidators: true,
+    });
+
+    return res.status(200).json({
+      status: true,
+      message: "Blog updated successfully",
+      data: updatedBlog,
+    });
+  } catch (error) {
+    console.error("Update error:", error);
+    return res.status(500).json({
+      status: false,
+      message: "Server error",
+    });
+  }
+};
