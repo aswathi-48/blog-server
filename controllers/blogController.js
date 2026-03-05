@@ -69,3 +69,24 @@ export const getBlog = async (req, res) => {
     });
   }
 };
+
+export const getSingleBlog = async (req, res) => {
+  try {
+    const { id } = req.body;
+    if (!id) {
+      console.log("id is required");
+    }
+    const blog = await Blog.findById(id);
+    if (!blog) {
+      console.log("blog not found");
+    } else {
+      res.status(200).json({
+        status: false,
+        message: "blog fetched successfully",
+        data: blog,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
